@@ -29,7 +29,6 @@ public class TestEntryAccount {
 
     @After
     public void tearDown() {
-        // закрой браузер
         driver.quit();
     }
 

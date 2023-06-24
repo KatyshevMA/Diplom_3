@@ -22,6 +22,9 @@ public class Account {
     //Гиперссылка Восстановить пароль
     private By buttonRestore = By.xpath(".//a[text()='Восстановить пароль']");
 
+    //Кнопка Выход
+    private By buttonExit = By.xpath(".//button[text()='Выход']");
+
 
     public Account (WebDriver driver) {
         this.driver = driver;
@@ -36,13 +39,14 @@ public class Account {
     public void clickButtonEntry() {
         driver.findElement(buttonEntry).click();
     }
-
     public void clickButtonRegistration() {
         driver.findElement(buttonRegistration).click();
     }
-
     public void clickButtonRestore() {
         driver.findElement(buttonRestore).click();
+    }
+    public void clickButtonExit() {
+        driver.findElement(buttonExit).click();
     }
 
     public void inputEmail(String newEmail) {
@@ -53,5 +57,11 @@ public class Account {
     public void inputPassword(String newPass) {
         driver.findElement(inputPass).click();
         driver.findElement(inputPass).sendKeys(newPass);
+    }
+
+    public boolean waitForDisplayedExitButton() {
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOfElementLocated(buttonExit));
+        return driver.findElement(buttonExit).isDisplayed();
     }
 }

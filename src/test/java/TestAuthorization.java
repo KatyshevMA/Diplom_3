@@ -85,7 +85,6 @@ public class TestAuthorization {
 
     @After
     public void tearDown() {
-        // закрой браузер
         driver.quit();
     }
 }
