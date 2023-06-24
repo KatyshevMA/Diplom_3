@@ -8,10 +8,13 @@ public class MainPage {
     private WebDriver driver;
 
     //Кнопка Личный кабинет
-    private By buttonPersonalAccount = By.xpath(".//nav[@class='AppHeader_header__nav__g5hnF']/a");
+    private By buttonPersonalAccount = By.xpath(".//p[text()='Личный Кабинет']");
 
     //Кнопка Конструктор
-    private By buttonConstructor = By.className("AppHeader_header__link__3D_hX AppHeader_header__link_active__1IkJo");
+    private By buttonConstructor = By.xpath(".//p[text()='Конструктор']");
+
+    //Кнопка Лента Заказов
+    private By buttonOrderBar = By.xpath(".//p[text()='Лента Заказов']");
 
     //Кнопка Войти в аккаунт
     private By buttonAccountEnter = By.xpath(".//button[text()='Войти в аккаунт']");
@@ -21,6 +24,9 @@ public class MainPage {
 
     //Кнопка Оформить заказ
     private By buttonCreateOrder = By.xpath(".//button[text()='Оформить заказ']");
+
+    //Логотип
+    private By logo = By.className("AppHeader_header__logo__2D0X2");
 
     public MainPage (WebDriver driver) {
         this.driver = driver;
@@ -35,13 +41,17 @@ public class MainPage {
     public void clickButtonPersonalAccount() {
         driver.findElement(buttonPersonalAccount).click();
     }
-
+    public void clickButtonOrderBar() {
+        driver.findElement(buttonOrderBar).click();
+    }
     public void clickButtonConstructor() {
         driver.findElement(buttonConstructor).click();
     }
-
     public void clickButtonAccountEnter() {
         driver.findElement(buttonAccountEnter).click();
+    }
+    public void clickLogo() {
+        driver.findElement(logo).click();
     }
 
     public boolean getDisplayedButtonCreateOrder() {
