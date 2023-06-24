@@ -28,6 +28,25 @@ public class MainPage {
     //Логотип
     private By logo = By.className("AppHeader_header__logo__2D0X2");
 
+    //Таб Булки
+    private By tabBuns = By.xpath(".//span[text()='Булки']");
+
+    //Таб Соусы
+    private By tabSauces = By.xpath(".//span[text()='Соусы']");
+
+    //Таб Начинки
+    private By tabStuffings = By.xpath(".//span[text()='Начинки']");
+
+    //Локатор для актвиного таба булок
+    private By activeTabBuns = By.xpath(".//span[text()='Булки']/parent::div[@class = 'tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']");
+
+    //Локатор для актвиного таба соусов
+    private By activeTabSauces = By.xpath(".//span[text()='Соусы']/parent::div[@class = 'tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']");
+
+    //Локатор для актвиного таба начинки
+    private By activeTabStuffings = By.xpath(".//span[text()='Начинки']/parent::div[@class = 'tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']");
+
+
     public MainPage (WebDriver driver) {
         this.driver = driver;
     }
@@ -54,10 +73,36 @@ public class MainPage {
         driver.findElement(logo).click();
     }
 
+
     public boolean getDisplayedButtonCreateOrder() {
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.visibilityOfElementLocated(buttonCreateOrder));
         return driver.findElement(buttonCreateOrder).isDisplayed();
     }
 
+    public void clickTabBuns() {
+        driver.findElement(tabBuns).click();
+    }
+    public void clickTabSauces() {
+        driver.findElement(tabSauces).click();
+    }
+    public void clickTabNStuffings() {
+        driver.findElement(tabStuffings).click();
+    }
+
+    public boolean getDisplayedActiveTabBuns() {
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOfElementLocated(activeTabBuns));
+        return driver.findElement(activeTabBuns).isDisplayed();
+    }
+    public boolean getDisplayedActiveTabSauces() {
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOfElementLocated(activeTabSauces));
+        return driver.findElement(activeTabSauces).isDisplayed();
+    }
+    public boolean getDisplayedActiveTabStuffings() {
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOfElementLocated(activeTabStuffings));
+        return driver.findElement(activeTabStuffings).isDisplayed();
+    }
 }
