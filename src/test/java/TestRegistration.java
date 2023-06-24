@@ -1,6 +1,8 @@
 import PageObject.Account;
 import PageObject.MainPage;
 import PageObject.Registration;
+import SystemSettings.SelectBrowser;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import org.junit.After;
 import org.junit.Assert;
@@ -8,9 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
 
 public class TestRegistration {
     private WebDriver driver;
@@ -22,13 +24,19 @@ public class TestRegistration {
     private String email = "newclient12345678111@mmm.ru";
     private String password = "123456";
 
-    private String token = "токен";
+    private String token;
 
 
     @Before
     public void setUp() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
-        driver = new ChromeDriver();
+        if (SelectBrowser.BROWSER.equals("Chrome")) {
+            driver = new ChromeDriver();
+        } else if (SelectBrowser.BROWSER.equals("Yandex")) {
+            ChromeOptions options = new ChromeOptions();
+            System.setProperty("webdriver.chrome.driver", "C:/WebDriver/bin/yandexdriver.exe");
+            driver = new ChromeDriver(options);
+        }
         driver.get("https://stellarburgers.nomoreparties.site/");
         mainPage = new MainPage(driver);
         mainPage.waitForLoadMainPage();
@@ -41,6 +49,7 @@ public class TestRegistration {
     }
 
     @Test
+    @DisplayName("Успешная регистрация (6 символов в пароле)")
     public void checkRegistrationWith6SymbolsSuccess() {
         registrationPage.inputName(name);
         registrationPage.inputEmail(email);
@@ -50,6 +59,7 @@ public class TestRegistration {
     }
 
     @Test
+    @DisplayName("Ошибка для некорректного пароля (5 символов в пароле)")
     public void checkRegistrationWith5SymbolsPassError() {
         registrationPage.inputName(name);
         registrationPage.inputEmail(email);
@@ -70,9 +80,12 @@ public class TestRegistration {
                 .post("/api/auth/login")
                 .then()
                 .extract().jsonPath().get("accessToken");
-        given()
-                .header("Authorization", token)
-                .when()
-                .delete("/api/auth/user");
+
+        if (token != null) {
+            given()
+                    .header("Authorization", token)
+                    .when()
+                    .delete("/api/auth/user");
+        }
     }
 }
